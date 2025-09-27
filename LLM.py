@@ -20,7 +20,7 @@ You are an experienced electrical engineer tasked with creating a test procedure
 - Example output file
 These files are here: \n\n{'\n\n'.join(texts)}
 
-Your task is to generate a new test case file that:
+Your task is to generate a new test case file that in the form of a DOCX document, following these requirements:
 
 1. Strictly follows the format, numbering, headings, and table styles of the example output file.
 2. Includes a step-by-step test procedure that an eletrical engineer can follow. In the test procedure:

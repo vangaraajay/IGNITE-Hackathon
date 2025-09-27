@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "procedure": {
+      "type": "object",
+      "properties": {
+        "rail_table": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "item": {"type": "string"},
+              "pin": {"type": "string"},
+              "net": {"type": "string"},
+              "value": {"type": ["string","null"]}
+            },
+            "required": ["item","pin","net","value"]
+          }
+        },
+        "steps": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["rail_table","steps"]
+    },
+    "datasheet": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "section": {"type": "string"},
+          "description": {"type": "string"},
+          "expected": {"type": "string"}
+        },
+        "required": ["section","description","expected"]
+      }
+    },
+    "assumptions": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["procedure","datasheet"]
+}

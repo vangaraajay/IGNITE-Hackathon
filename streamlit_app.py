@@ -21,7 +21,7 @@ if uploaded_files:
             content = file.read().decode("utf-8")
         elif filename.endswith(".xlsx"):
             df = pd.read_excel(file)
-            content = df.decode("utf-8")
+            content = df.to_csv(index=False) 
         elif filename.endswith(".docx"):
             doc = Document(file)
             content = "\n".join([para.text for para in doc.paragraphs])

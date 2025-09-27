@@ -95,38 +95,40 @@ if uploaded_files:
             st.warning(f"Skipping {f.name} (unsupported or empty)")
 
 # Prompt template
-BASE_PROMPT = """You are an experienced electrical engineer tasked with creating a test procedure for a LoRa radio PCB.
+BASE_PROMPT = """
+You are an experienced electrical engineer tasked with creating a test procedure for a LoRa radio PCB. You will be provided with:
 
-You will be provided with:
 - Type of PCB: LoRa Radio
 - BOM Documents
 - Assembly Testpoint Report / Netlist
 - PCB Hardware Specifications
 - PCB Software Specifications
 - Schematic Files
-- Arduino Uno Test Case Files
 - Example output file
+These files are here: {FILES_BLOCK}
 
-These files are here:
-{FILES_BLOCK}
+Your task is to generate a new test case file that in the form of a DOCX document, following these requirements:
 
-Your task: generate a new **test case** in the **exact format** of the example output file, including all tables, headings, numbering, and styles.
+1. Strictly follows the format, numbering, headings, and table styles of the example output file.
+2. Includes a step-by-step test procedure that an electrical engineer can follow. In the test procedure:
+ - Make sure every step in the TEST PROCEDURE is numbered and has a heading (for example, "4.1 - Visual Inspection, and then 4.1.2- Inspect the PCB...)
+ - Before powering on UT, verify each power rail is not connected to ground or shorted. Verify each power rail is not connected to another power rail.
+ - identify local passive components (resistors, capacitors, inductors) near components that start with "U" (integrated circuits) and "X" (crystals) and include them in the test procedure. Look for easier points to probe, such as test points or vias, and include them in the test procedure.
 
-Requirements:
-1) Strictly follow the example output file’s structure, numbering, headings, and table styles.
-2) Provide a step-by-step test procedure an electrical engineer can follow. In the procedure:
-   - Before powering on UT, verify each power rail is not shorted to ground and not shorted to other rails.
-   - Identify local passive components (R, C, L) near parts starting with "U" (ICs) and "X" (crystals) and include them with easier probe points (test points, vias).
-3) Voltage guardrail tests:
+3. Places special emphasis on voltage guardrail tests:
    - Check power rails at all test points.
-   - Specify expected voltages with tolerances.
-   - Include warnings for out-of-range conditions.
-4) Include power-on checks, connectivity tests, functional tests using Arduino test cases, and signal verification.
-5) Be concise but complete enough to run without extra guidance.
+   - Specify expected voltages and acceptable tolerances.
+   - Include warnings if voltages exceed limits.
 
-IMPORTANT:
-- Output must be **only** the final test procedure content, in the example file’s exact structure and style (no extra commentary).
+4. Covers power-on checks, connectivity tests, functional tests using test cases, and signal verification.
+5. Be concise but detailed enough to perform tests without additional guidance.
+6. Presents a test data sheet at the end of the document similar to the one in the example output file.
+7. Make sure all tables are formatted correctly and the columns are aligned and neat.
+8. Put a generous tolerance on the Oscilloscope checks like 10 or 20% tolerance.
+
+Output the result **strictly in the format of the example output file**, including all tables, headings, and numbering.
 """
+
 
 # Generate button
 generated_text = None

@@ -144,7 +144,7 @@ if st.button("Generate Test Procedure", type="primary", disabled=generate_disabl
         with st.spinner("Calling LLM to generate the test procedure..."):
             try:
                 client = OpenAI(api_key=API_KEY)  # or simply OpenAI() to read from env
-                files_block = "\n\n".join(texts)
+                lock = "\n\n".join(texts)
                 prompt = BASE_PROMPT.format(FILES_BLOCK=files_block)
 
                 resp = client.chat.completions.create(
